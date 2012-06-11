@@ -1,19 +1,26 @@
-<div class="comment<?php print ' '. $status; ?>">
-  <?php if ($picture) : ?>
-    <?php print $picture ?>
+<div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+
+  <?php if ($new): ?>
+    <span class="new"><?php print $new ?></span>
   <?php endif; ?>
-  <h3 class="title"><?php print $title ?></h3>
-  <div class="submitted"><?php print $submitted ?><?php if ($comment->new) : ?><span class="new"> *<?php print $new ?></span><?php endif; ?></div>
-  <div class="content">
-    <?php print $content ?>
+
+
+  <div class="submitted">
+    <?php print $submitted; ?>
+  </div>
+
+  <div class="content"<?php print $content_attributes; ?>>
+    <?php
+      // We hide the comments and links now so that we can render them later.
+      hide($content['links']);
+      print render($content);
+    ?>
     <?php if ($signature): ?>
-      <div class="clear-block">
-        <div>—</div>
-        <?php print $signature ?>
-      </div>
+    <div class="user-signature clearfix">
+      <?php print $signature ?>
+    </div>
     <?php endif; ?>
   </div>
-  <!-- BEGIN: links -->
-  <div class="links">&raquo; <?php print $links ?></div>
-  <!-- END: links -->
+
+  <?php print render($content['links']) ?>
 </div>

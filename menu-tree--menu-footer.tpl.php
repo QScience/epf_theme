@@ -1,0 +1,1 @@
+<ul class="nav"><?php print $tree ?></ul>

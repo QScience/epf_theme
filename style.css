@@ -489,6 +489,7 @@ color:#D30703;
     font-size: 12px;
     padding-bottom: 0;
     width: 275px;
+    line-height: 16px;
 }
 .SR ul {
     margin: 0;
@@ -517,4 +518,107 @@ color:#D30703;
     border-bottom: 0px;
     padding: 0.1em 0.6em;
 }
+ul li.collapsed {
+    list-style-image: none;
+    list-style-type: none;
+}
+ul li.leaf {
+    list-style-image: none;
+    list-style-type: none;
+}
+
+/* login form*/
+.SR .content .form-item, .form-actions {
+    margin-left: 1em;
+    margin-top:0.5em;
+    margin-bottom:0.5em
+}
+
+.SR .content .listsVisible .item-list ul li {
+	  background:NONE;
+	  padding-bottom: 0em;
+    padding-left: 0em;
+    padding-top: 0em;
+	  
+}
+
+/* Search block in region header. */
+
+#header-block{
+	    float: right;
+    padding: 3px 10px 0 0;
+}
+/* user view setting */
+
+a.user_icon{
+padding-right:2px;
+}
+
+/* article head */
+.VoteHead {
+/*	height: 85px;*/
+	display: block;
+	/*margine: 12px;*/
+}
+.PostHeadVote {
+	display: inline;
+	float: left;
+	width: 52px;
+	text-align: center;
+}
+
+.PostHeadTitle {
+	display: inline;
+/*	float: right;
+	width: 890px;*/
+}
+
+.VoteCount {
+	height: 82px;
+	margin-top: 3px;
+	background: url(../images/vote-bg.gif) no-repeat;
+	overflow:hidden;
+}
+
+span.voteNum{
+	display:block;
+	font-weight:bold;
+	margin-top:10px;
+}
+
+div.voteNum{
+	height:52px;
+	overflow:hidden;
+}
+
+.VoteIt {
+	/*background:transparent url(../images/vote-box-2.gif) repeat scroll 0pt 0pt;*/
+	margin-top:3px;
+}
+.PostHeadTitle h2{
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+/* comment */
+.comment {
+    clear: left;
+    font-size: 12px;
+    margin: 15px auto 0;
+    padding: 5px 0 0;
+    position: relative;
+}
+.comment p{
+    margin:0;
+}
+#main .comment-wrapper .title{
+	font-size: 17px;
+}
+.comments{
+	 border-top: 1px dashed #CCCCCC;
+	 border-bottom: 1px dashed #CCCCCC;
+}
+.comment-form .form-type-item{
+	display:none;
+}
+
 

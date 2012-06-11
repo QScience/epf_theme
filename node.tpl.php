@@ -1,15 +1,42 @@
 <?php
-// $Id: node.tpl.php,v 1.4 2007/08/07 08:39:36 goba Exp $
+// default? need to delete if use default template
 ?>
-<div class="node<?php if ($sticky) { print " sticky"; } ?><?php if (!$status) { print " node-unpublished"; } ?>">
-  <?php print $picture ?>
-  <?php if ($page == 0): ?>
-    <h1 class="title"><a href="<?php print $node_url ?>"><?php print $title ?></a></h1>
+
+<div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+
+<div class="VoteHead">
+<!-- <div class="PostHeadVote">
+<div class="VoteCount" id="voteCount">
+	<?php print render($title_prefix); ?>
+</div>
+</div> -->
+<div class="PostHeadTitle"> 
+  <?php if($page):?>
+    <h2 class="title"<?php print $title_attributes; ?>><?php print $title; ?></h2>
+  <?php else:?>
+     <h2 <?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
+  <?php endif?>
+
+  <?php if ($display_submitted): ?>
+    <div class="submitted">
+      <?php print $submitted; ?>
+    </div>
   <?php endif; ?>
-    <span class="submitted"><?php print $submitted ?></span>
-    <div class="content"><?php hide($content['comments']); print render($content); ?></div>
-    <?php if ($content['links']): ?>
-    <div class="links">&raquo; <?php print render($content['links'])?></div>
-    <?php endif; ?>
-     <?php print render($content['comments']); ?>
+    <?php print render($title_suffix); ?>
+  
+</div>
+
+  <div class="content"<?php print $content_attributes; ?>>
+    <?php
+      // We hide the comments and links now so that we can render them later.
+      hide($content['comments']);
+      hide($content['links']);
+      print render($content);
+    ?>
+  </div>
+   </div>
+
+
+  <?php print render($content['comments']); ?>
+
 </div>

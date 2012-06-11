@@ -4,7 +4,7 @@
 <div class="<?php print "block block-$block->module" ?>" id="<?php print "block-$block->module-$block->delta"; ?>">
 
 <div class="content">
-<?php if ($block->subject):?>
+<?php if ($block->subject&& $block->region!="footer"):?>
 <div class="head">
 <h1><span class="left"><strong><?php print $block->subject ?></strong></span>
 </h1></div>
