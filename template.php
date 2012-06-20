@@ -80,7 +80,7 @@ function epf_links__system_main_menu($variables) {
 function epf_preprocess_page(& $variables) {
 
 	$menus = menu_tree_page_data('main-menu');
-	$router_item = menu_get_item();
+	//$router_item = menu_get_item();
 	$links = array ();
 	foreach ($menus as $item) {
 		if (!$item['link']['hidden']) {
@@ -92,9 +92,8 @@ function epf_preprocess_page(& $variables) {
 					$lb = $itemb['link']['localized_options'];
 					$lb['href'] = $itemb['link']['href'];
 					$lb['title'] = $itemb['link']['title'];
+					$l['below']['menu-' . $itemb['link']['mlid']] = $lb;
 				}
-				$l['below']['menu-' . $itemb['link']['mlid']] = $lb;
-
 			}
 			// Keyed with the unique mlid to generate classes in theme_links().
 			$links['menu-' . $item['link']['mlid']] = $l;
@@ -176,3 +175,107 @@ function epf_preprocess_comment(&$variables) {
 
   $variables['submitted'] = t('!username said on !datetime: ', array('!username' => $variables['author'], '!datetime' => $variables['created']));
 }
+
+/*
+ * implements main_menu with hoot_preprocess_node()
+ */
+function epf_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  list(, , $bundle) = entity_extract_ids('node', $node);
+  $output='';
+  
+ // $variables['ins']=$variables['content']['links'];
+    foreach (field_info_instances('node', $bundle) as $instance) {
+    	if($instance['field_name']=='authorname'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['paper_authors']=$node->{$instance['field_name']}['und'][0]['value'];
+    		}
+    	}
+    	if($instance['field_name']=='field_reviewer'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['reviewer']=$node->{$instance['field_name']}['und'][0]['value'];
+    		}
+    	}
+    	if($instance['field_name']=='datebegin'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['datebegin']=substr($node->{$instance['field_name']}['und'][0]['value'],0,10);
+    		}
+    	}
+    	if($instance['field_name']=='dateend'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['dateend']=substr($node->{$instance['field_name']}['und'][0]['value'],0,10);
+    		}
+    	}
+    	if($instance['field_name']=='city'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['city']=$node->{$instance['field_name']}['und'][0]['value'];
+    		}
+    	}
+    	if($instance['field_name']=='website'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['website']=$node->{$instance['field_name']}['und'][0]['value'];
+    		}
+    	}
+    			
+    	if($instance['widget']['module']=='arxiv'){
+    		if(!empty($node->{$instance['field_name']})){
+    			$variables['paper_authors']=$node->{$instance['field_name']}['und'][0]['authors'];
+    		}   		
+    		
+    		if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['pdfUrl'] != '') {
+					$output .= '<a href="/paper/download/'.$node->nid.'/pdf">pdf </a>';
+				}
+				if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['psUrl'] != '') {
+					$output .= '<a href="/paper/download/'.$node->nid.'/ps">ps </a>';
+				}
+				if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['otherUrl'] != '') {
+					$output .= '<a href="/paper/download/'.$node->nid.'/other">other </a>';
+				}
+    	}
+    	if($instance['field_name']=='field_author'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['paper_authors']=$node->{$instance['field_name']}['und'][0]['value'];
+    		}
+    	}
+    	if($instance['field_name']=='field_upload'){
+    		if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['filename'] != '') {
+    			$url = file_create_url($node->{$instance['field_name']}['und'][0]['uri']);
+					$output .= '<a href="/paper/download/'.$node->nid.'">download </a>';
+				}
+    	}
+    	if($instance['field_name']=='field_prefix'){
+    		if(!empty($node->{$instance['field_name']})){
+    		$variables['news_prefix']=$node->{$instance['field_name']}['und'][0]['value'];
+    		}
+    	}
+  }
+  if(substr($node->type,0,5)=='paper'){
+  $statistics = statistics_get($node->nid);
+  $obj = db_select('arxiv_downNo', 'm')->fields('m', array ('downloadNo'))
+  	       ->condition('m.nid', $node->nid)->execute()->fetchAll();
+   if($obj){
+   	$variables['download']=  $output.' ('.(empty($statistics['totalcount'])?0:$statistics['totalcount']).' views, '.$obj[0]->downloadNo.' download, '.$node->comment_count.' comments)';
+   }else{
+   	 $variables['download']=  $output.' ('.(empty($statistics['totalcount'])?0:$statistics['totalcount']).' views, 0 download, '.$node->comment_count.' comments)';
+   }
+  }
+  if($variables['page']){
+  	 $variables['submitted'] = t('posted on !datetime', array( '!datetime' => $variables['date']));
+  }else{
+  	 $variables['submitted'] = t('posted by !username (!datetime)', array('!username' => $variables['name'], '!datetime' => $variables['date']));
+  }
+ 
+
+}
+
+function epf_preprocess_plus1_widget(&$variables) {
+	$node=node_load($variables['entity_id']);
+	$node_type=node_type_load($node->type)->name;
+	$b = str_word_count($node_type,1);
+	$node_type=$b[0];
+	$variables['node_type']=$node_type;
+	if (!$variables['logged_in'] && !$variables['can_vote']) {
+    $variables['widget_message'] =  l(t('vote'), 'user', array('html' => TRUE));
+  }
+}
+

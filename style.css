@@ -229,12 +229,13 @@ color:#D30703;
 
 .Container {
     padding-top: 10px;
+    min-height: 320px;
 }
 
 /** Drupal **/
 
 .node {
-  border-bottom: 1px solid #ccc;
+ /* border-bottom: 1px solid #ccc;*/
 	margin-top: 10px;
 }
 
@@ -250,6 +251,15 @@ color:#D30703;
 .panel-pane {
 	border-bottom: 5px solid #ccc;
 }
+.item-list ul.pager{
+	padding-top:5px
+}
+.item-list .pager li {
+    padding: 0;
+    margin-left:3px;
+    margin-right:3px;
+}
+
 /* header and bottom */
 
 #logo {
@@ -451,11 +461,14 @@ color:#D30703;
 /* body */
 
 .SCi {
-    float: left;
-    width: 950px;
+    padding-right: 280px;
+}
+.SCi #main{
+    margin-right: 20px;
+    display: inline-block;
 }
 .SR {
-    display: block;
+	 position: relative;
     float: right;
     width: 275px;
 }
@@ -555,16 +568,14 @@ padding-right:2px;
 }
 
 /* article head */
-.VoteHead {
-/*	height: 85px;*/
-	display: block;
-	/*margine: 12px;*/
+.VoteHead .content {
+float:left;
 }
 .PostHeadVote {
 	display: inline;
 	float: left;
-	width: 52px;
 	text-align: center;
+	width: 60px;
 }
 
 .PostHeadTitle {
@@ -573,31 +584,44 @@ padding-right:2px;
 	width: 890px;*/
 }
 
-.VoteCount {
-	height: 82px;
-	margin-top: 3px;
-	background: url(../images/vote-bg.gif) no-repeat;
-	overflow:hidden;
-}
-
-span.voteNum{
-	display:block;
-	font-weight:bold;
-	margin-top:10px;
-}
-
-div.voteNum{
-	height:52px;
-	overflow:hidden;
-}
-
-.VoteIt {
-	/*background:transparent url(../images/vote-box-2.gif) repeat scroll 0pt 0pt;*/
-	margin-top:3px;
-}
 .PostHeadTitle h2{
-    margin: 0 0 5px 0;
+    margin: 0 0 0px 0;
     padding: 0;
+    font-size:16px;
+}
+.PostHeadTitle h2 a{
+    font-size:16px;
+}
+.PostHeadTitle .prefix{
+   color:#40454B;
+}
+.VoteHead{
+	height:80px;
+}
+.VoteHead .PostHeadTitle{
+	padding-left:70px;
+	display: block;
+}
+.VoteHead  .node-article, .VoteHead  .node-blog{
+	padding-left:0px;
+}
+.VoteHead p {
+    margin: -1px;
+}
+
+.VoteHead .submitted {
+color: #828282;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+div.plus1-widget {
+    margin-bottom: 1px;
+}
+.node_type{
+	color: #D30703;
+	
 }
 /* comment */
 .comment {
@@ -607,7 +631,7 @@ div.voteNum{
     padding: 5px 0 0;
     position: relative;
 }
-.comment p{
+.comment p, .content p{
     margin:0;
 }
 #main .comment-wrapper .title{
@@ -620,5 +644,8 @@ div.voteNum{
 .comment-form .form-type-item{
 	display:none;
 }
-
+.submitted span.plus1-widget-comment{
+	float:right;
+	margin-right:5px;
+}
 

@@ -1,18 +1,17 @@
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
-  <?php if ($new): ?>
-    <span class="new"><?php print $new ?></span>
-  <?php endif; ?>
-
 
   <div class="submitted">
     <?php print $submitted; ?>
+    <?php print render($content['plus1_widget'])?>
   </div>
+  
 
   <div class="content"<?php print $content_attributes; ?>>
     <?php
       // We hide the comments and links now so that we can render them later.
       hide($content['links']);
+      hide($content['plus1_widget']);
       print render($content);
     ?>
     <?php if ($signature): ?>
@@ -21,6 +20,5 @@
     </div>
     <?php endif; ?>
   </div>
-
-  <?php print render($content['links']) ?>
+	
 </div>

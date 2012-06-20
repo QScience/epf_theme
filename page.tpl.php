@@ -8,7 +8,7 @@
      
     <ul id="globalnav">
      	<?php if ($logged_in) : ?>
-     	<li class="first"><?php print t("Hello ") ?> <strong><a href="/user/<?php print $user->uid?>"><?php print $user->name ?></a></strong></li>
+     	<li class="first"><?php print t("Hello ") ?> <strong><?php print theme('username', array('account'=>$user))?></strong></li>
         		<li><a href="/user/logout"><?php print t("Log out") ?></a></li>
      	<?php else: ?>
         <li class="noborder"><strong><a href="/user/register"><?php print t("Join Now")?>!</a></strong></li>
@@ -31,6 +31,14 @@
     
 </div>
 <div class="Container">
+<div class="SR">
+ 	<?php if ($page['sidebar_first']): ?>
+        <div id="sidebar-first" class="column sidebar"><div class="section">
+          <?php print render($page['sidebar_first']); ?>
+        </div></div> <!-- /.section, /#sidebar-first -->
+    <?php endif; ?>
+</div><!--SR-->
+
 <div class="SCi">
  	<div id="main">
  		<?php if ($page['highlighted']): ?><div id="highlighted"><?php print render($page['highlighted']); ?></div><?php endif; ?>
@@ -49,13 +57,7 @@
 
     </div><!-- main -->
 </div><!--SCi-->
-<div class="SR">
- 	<?php if ($page['sidebar_first']): ?>
-        <div id="sidebar-first" class="column sidebar"><div class="section">
-          <?php print render($page['sidebar_first']); ?>
-        </div></div> <!-- /.section, /#sidebar-first -->
-    <?php endif; ?>
-</div><!--SR-->
+
 </div>
 <div class="ExtraBG">
 <?php if ($page['footer']): ?>
