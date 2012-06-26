@@ -21,8 +21,14 @@ function epf_links__system_main_menu($variables) {
 				$key
 			);
 
-			if (isset ($link['href']) && $link['href'] == $_GET['q'] && !drupal_is_front_page() && (empty ($link['language']) || $link['language']->language == $language_url->language)) {
+			if (isset ($link['href']) && ($link['href'] == $_GET['q'] ||  $link['href'] == arg(0)) && !drupal_is_front_page() && (empty ($link['language']) || $link['language']->language == $language_url->language)) {
 				$class[] = 'selected';
+			}elseif(isset($link['below'])){
+				foreach ($link['below'] as $keyb => $linkb) {
+					if(isset ($linkb['href']) && ($linkb['href'] == $_GET['q'] ||  $linkb['href'] == arg(0)) && !drupal_is_front_page() && (empty ($linkb['language']) || $linkb['language']->language == $language_url->language)){
+						$class[] = 'selected';
+					}
+				}
 			}
 			$output .= '<li>';
 
@@ -223,13 +229,13 @@ function epf_preprocess_node(&$variables) {
     		}   		
     		
     		if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['pdfUrl'] != '') {
-					$output .= '<a href="/paper/download/'.$node->nid.'/pdf">pdf </a>';
+					$output .= '<a href="'.url('/paper/download/'.$node->nid.'/pdf').'" >pdf </a>';
 				}
 				if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['psUrl'] != '') {
-					$output .= '<a href="/paper/download/'.$node->nid.'/ps">ps </a>';
+					$output .= '<a href="'.url('/paper/download/'.$entity->nid.'/ps').'" >ps </a>';
 				}
 				if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['otherUrl'] != '') {
-					$output .= '<a href="/paper/download/'.$node->nid.'/other">other </a>';
+					$output .= '<a href="'.url('/paper/download/'.$entity->nid.'/other').'" >other </a>';
 				}
     	}
     	if($instance['field_name']=='field_author'){
@@ -240,7 +246,7 @@ function epf_preprocess_node(&$variables) {
     	if($instance['field_name']=='field_upload'){
     		if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['filename'] != '') {
     			$url = file_create_url($node->{$instance['field_name']}['und'][0]['uri']);
-					$output .= '<a href="/paper/download/'.$node->nid.'">download </a>';
+					$output .= '<a href="'.url('/paper/download/'.$entity->nid).'" >download </a>';
 				}
     	}
     	if($instance['field_name']=='field_prefix'){
@@ -269,13 +275,54 @@ function epf_preprocess_node(&$variables) {
 }
 
 function epf_preprocess_plus1_widget(&$variables) {
-	$node=node_load($variables['entity_id']);
-	$node_type=node_type_load($node->type)->name;
-	$b = str_word_count($node_type,1);
-	$node_type=$b[0];
-	$variables['node_type']=$node_type;
 	if (!$variables['logged_in'] && !$variables['can_vote']) {
     $variables['widget_message'] =  l(t('vote'), 'user', array('html' => TRUE));
+  }
+}
+
+/**
+ * Alters link url in calendar events block in order to filter events at /events
+ *
+ * @see template_preprocess_calendar_datebox()
+ */
+function epf_preprocess_calendar_datebox(&$vars) {
+  $date = $vars['date'];
+  $view = $vars['view'];
+  $day_path = calendar_granularity_path($view, 'day');
+  $month_path = calendar_granularity_path($view, 'month');
+  
+ // $vars['url'] = str_replace(array($month_path, $year_path), $day_path, date_pager_url($view, NULL, $date, $force_view_url));
+  
+  $vars['url'] = 'events/' . $date;
+  $vars['link'] = !empty($day_path) ? l($vars['day'], $vars['url']) : $vars['day'];
+}
+
+/**
+ * Alters link url for month in calendar events block in order to filter events at /events
+ * 
+ * @see theme_date_nav_title
+ */
+function epf_date_nav_title($params) {
+  $granularity = $params['granularity'];
+  $view = $params['view'];
+  $date_info = $view->date_info;
+  $link = !empty($params['link']) ? $params['link'] : FALSE;
+  $format = !empty($params['format']) ? $params['format'] : NULL;
+  switch ($granularity) {
+    case 'month':
+      $format = !empty($format) ? $format : (empty($date_info->mini) ? 'F Y' : 'F');
+      $title = date_format_date($date_info->min_date, 'custom', $format);
+      $date_arg = $date_info->year . '-' . date_pad($date_info->month);
+      break;
+  }
+  if (!empty($date_info->mini) || $link) {
+    // Month navigation titles are used as links in the mini view.
+    $attributes = array('title' => t('View full page month'));
+    $url = 'events/'.$date_arg;//date_pager_url($view, $granularity, $date_arg, TRUE);
+    return l($title, $url, array('attributes' => $attributes));
+  }
+  else {
+    return $title;
   }
 }
 

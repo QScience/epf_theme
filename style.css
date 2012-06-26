@@ -223,7 +223,7 @@ input {
 #main .title {
 	font-size: 1.5em;
 } 
-.title{
+.title, .pane-title, pane-title a{
 color:#D30703;
 }
 
@@ -237,6 +237,9 @@ color:#D30703;
 .node {
  /* border-bottom: 1px solid #ccc;*/
 	margin-top: 10px;
+}
+div.panel-pane div.node {
+    margin-bottom: 10px;
 }
 
 .links {
@@ -462,9 +465,12 @@ color:#D30703;
 
 .SCi {
     padding-right: 280px;
+    padding-left: 280px;
+    
 }
 .SCi #main{
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
     display: inline-block;
 }
 .SR {
@@ -472,8 +478,13 @@ color:#D30703;
     float: right;
     width: 275px;
 }
+.SL {
+	 position: relative;
+    float: left;
+    width: 275px;
+}
 /*block*/
-.SR .content {
+.SR .content,.SL .content {
     background: none no-repeat scroll left top #F3F3F3;
     border: 1px solid #DCDCDC;
     display: block;
@@ -482,11 +493,11 @@ color:#D30703;
     padding-bottom: 5px;
     width: 275px;
 }
-.SR .content .head {
+.SR .content .head,.SL .content .head {
     background: url("images/rightBG.png") repeat-x scroll 0 0 transparent;
     border-bottom: 1px solid #DBDBDB;
 }
-.SR .content .head h1 {
+.SR .content .head h1,.SL .content .head h1 {
     color: #D30703;
     font-size: 17px;
     height: 21px;
@@ -494,39 +505,39 @@ color:#D30703;
     margin: 0;
     padding: 5px 0 5px 5px;
 }
-.SR .content .head .left {
+.SR .content .head .left,.SL .content .head .left {
     float: left;
 }
-.SR .content .listsVisible {
+.SR .content .listsVisible,.SL .content .listsVisible {
     float: left;
     font-size: 12px;
     padding-bottom: 0;
     width: 275px;
     line-height: 16px;
 }
-.SR ul {
+.SR ul,.SL ul {
     margin: 0;
-    padding: 4px;
+    padding: 0px;
 }
-.SR .content .listsVisible li {
+.SR .content .listsVisible li,.SL .content .listsVisible li {
     background: url("images/point.gif") no-repeat scroll 0 15px transparent;
     padding-bottom: 3px;
     padding-left: 10px;
     padding-top: 10px;
 }
-.SR li {
+.SR li,.SL li {
     list-style-position: outside;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-.SR .block table {
+.SR .block table,.SL .block table {
     width: 100%;
 }
-.SR .block tbody {
+.SR .block tbody,.SL .block tbody {
     border-top: 0px;
 }
-.SR .block tr.even, tr.odd {
+.SR .block tr.even, tr.odd,.SL.block tr.even, tr.odd {
     background: none;
     border-bottom: 0px;
     padding: 0.1em 0.6em;
@@ -541,13 +552,13 @@ ul li.leaf {
 }
 
 /* login form*/
-.SR .content .form-item, .form-actions {
+.SR .content .form-item, .form-actions,.SL .content .form-item, .form-actions {
     margin-left: 1em;
     margin-top:0.5em;
     margin-bottom:0.5em
 }
 
-.SR .content .listsVisible .item-list ul li {
+.SR .content .listsVisible .item-list ul li,.SL .content .listsVisible .item-list ul li {
 	  background:NONE;
 	  padding-bottom: 0em;
     padding-left: 0em;
@@ -596,13 +607,13 @@ float:left;
    color:#40454B;
 }
 .VoteHead{
-	height:80px;
+	height:auto;
 }
 .VoteHead .PostHeadTitle{
 	padding-left:70px;
 	display: block;
 }
-.VoteHead  .node-article, .VoteHead  .node-blog{
+.node-article .PostHeadTitle, .node-blog .PostHeadTitle,.node-editorial .PostHeadTitle{
 	padding-left:0px;
 }
 .VoteHead p {
@@ -618,6 +629,10 @@ color: #828282;
 
 div.plus1-widget {
     margin-bottom: 1px;
+}
+
+div.plus1-widget small {
+    font-size: 12px;
 }
 .node_type{
 	color: #D30703;
@@ -648,4 +663,11 @@ div.plus1-widget {
 	float:right;
 	margin-right:5px;
 }
+/* Calendar */
+.item-list ul.pager {
+    padding-top: 0px;
+}
 
+.date-nav-wrapper .date-nav {
+  padding-bottom: 0em
+}

@@ -12,4 +12,5 @@ regions[highlighted] = Highlighted
 ;regions[help] = Help
 regions[content] = Content
 regions[sidebar_first] = Right sidebar
+regions[sidebar_second] = left sidebar
 regions[footer] = Footer
