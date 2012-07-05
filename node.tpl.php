@@ -26,11 +26,18 @@
 
   <?php if ($display_submitted): ?>
     <div class="submitted">
-      <?php if(isset($paper_authors)) print('<p>'.$paper_authors.'</p>'); ?>
+      <?php if(isset($paper_authors)){
+      	$author=explode(',',$paper_authors);
+      	if(count($author)==1||$page){
+      		print('<p>'.$paper_authors.' ('.$submitted.')</p>' );
+      	}else{
+      		print('<p>'.$author[0].' <em>et al</em> ('.$submitted.')</p>' );
+      	}
+      }?>
        <?php if(isset($datebegin)) print('<p>'.$datebegin.' - '.$dateend.'</p>'); ?>
       <?php if(isset($city))print('<p>'.$city.'</p>'); ?>
       <?php if(isset($reviewer)) print('<p> reviewed by <strong>'.$reviewer.'</strong></p>'); ?>
-      <?php print ('<p>'.$submitted.'</p>'); ?>
+      <?php if(!isset($paper_authors)) print ('<p>'.$submitted.'</p>'); ?>
       <?php if(isset($download))print('<p>'.$download.'</p>'); ?>
     </div>
   <?php endif; ?>

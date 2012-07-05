@@ -324,7 +324,7 @@ div.panel-pane div.node {
 	position: relative;
 	z-index: 100;
 	padding: 0 0 0 10px;
-	float: left;
+	float:left;
 }
 
 #navigation ul {
@@ -335,7 +335,7 @@ div.panel-pane div.node {
 
 #navigation li {
 	float: left;
-	margin: 0 5px;
+	margin: 0 3px;
 	display: inline;
 	position: relative;
 }
@@ -472,6 +472,7 @@ div.panel-pane div.node {
     margin-right: 10px;
     margin-left: 10px;
     display: inline-block;
+    width:98%;
 }
 .SR {
 	 position: relative;
@@ -512,6 +513,7 @@ div.panel-pane div.node {
     float: left;
     font-size: 12px;
     padding-bottom: 0;
+    padding-top:5px;
     width: 275px;
     line-height: 16px;
 }
@@ -569,13 +571,16 @@ ul li.leaf {
 /* Search block in region header. */
 
 #header-block{
-	    float: right;
+		float:right;
     padding: 3px 10px 0 0;
 }
 /* user view setting */
 
 a.user_icon{
 padding-right:2px;
+}
+.profile .field {
+    display:table;
 }
 
 /* article head */
@@ -662,6 +667,12 @@ div.plus1-widget small {
 .submitted span.plus1-widget-comment{
 	float:right;
 	margin-right:5px;
+}
+
+div.comment_title{
+	width:100%;
+	border-bottom: 1px dashed #CCCCCC;
+	margin-bottom:5px;
 }
 /* Calendar */
 .item-list ul.pager {

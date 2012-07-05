@@ -194,7 +194,7 @@ function epf_preprocess_node(&$variables) {
     foreach (field_info_instances('node', $bundle) as $instance) {
     	if($instance['field_name']=='authorname'){
     		if(!empty($node->{$instance['field_name']})){
-    		$variables['paper_authors']=$node->{$instance['field_name']}['und'][0]['value'];
+    			$variables['paper_authors']=$node->{$instance['field_name']}['und'][0]['value'];
     		}
     	}
     	if($instance['field_name']=='field_reviewer'){
@@ -232,21 +232,21 @@ function epf_preprocess_node(&$variables) {
 					$output .= '<a href="'.url('/paper/download/'.$node->nid.'/pdf').'" >pdf </a>';
 				}
 				if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['psUrl'] != '') {
-					$output .= '<a href="'.url('/paper/download/'.$entity->nid.'/ps').'" >ps </a>';
+					$output .= '<a href="'.url('/paper/download/'.$node->nid.'/ps').'" >ps </a>';
 				}
 				if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['otherUrl'] != '') {
-					$output .= '<a href="'.url('/paper/download/'.$entity->nid.'/other').'" >other </a>';
+					$output .= '<a href="'.url('/paper/download/'.$node->nid.'/other').'" >other </a>';
 				}
     	}
     	if($instance['field_name']=='field_author'){
     		if(!empty($node->{$instance['field_name']})){
-    		$variables['paper_authors']=$node->{$instance['field_name']}['und'][0]['value'];
+    			$variables['paper_authors']=$node->{$instance['field_name']}['und'][0]['value'];
     		}
     	}
     	if($instance['field_name']=='field_upload'){
     		if (!empty($node->{$instance['field_name']})&&$node->{$instance['field_name']}['und'][0]['filename'] != '') {
     			$url = file_create_url($node->{$instance['field_name']}['und'][0]['uri']);
-					$output .= '<a href="'.url('/paper/download/'.$entity->nid).'" >download </a>';
+					$output .= '<a href="'.url('/paper/download/'.$node->nid).'" >download </a>';
 				}
     	}
     	if($instance['field_name']=='field_prefix'){
@@ -268,7 +268,7 @@ function epf_preprocess_node(&$variables) {
   if($variables['page']){
   	 $variables['submitted'] = t('posted on !datetime', array( '!datetime' => $variables['date']));
   }else{
-  	 $variables['submitted'] = t('posted by !username (!datetime)', array('!username' => $variables['name'], '!datetime' => $variables['date']));
+  	 $variables['submitted'] = t('posted by !username, !datetime', array('!username' => $variables['name'], '!datetime' => $variables['date']));
   }
  
 
@@ -293,7 +293,7 @@ function epf_preprocess_calendar_datebox(&$vars) {
   
  // $vars['url'] = str_replace(array($month_path, $year_path), $day_path, date_pager_url($view, NULL, $date, $force_view_url));
   
-  $vars['url'] = 'events/' . $date;
+  $vars['url'] = url('events/' . $date);
   $vars['link'] = !empty($day_path) ? l($vars['day'], $vars['url']) : $vars['day'];
 }
 
@@ -318,11 +318,12 @@ function epf_date_nav_title($params) {
   if (!empty($date_info->mini) || $link) {
     // Month navigation titles are used as links in the mini view.
     $attributes = array('title' => t('View full page month'));
-    $url = 'events/'.$date_arg;//date_pager_url($view, $granularity, $date_arg, TRUE);
+    $url = url('events/'.$date_arg);//date_pager_url($view, $granularity, $date_arg, TRUE);
     return l($title, $url, array('attributes' => $attributes));
   }
   else {
     return $title;
   }
 }
+
 

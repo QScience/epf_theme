@@ -49,6 +49,8 @@
 
 <div class="SCi">
  	<div id="main">
+ 	<?php print $messages; ?>
+ 	
  		<?php if ($page['highlighted']): ?><div id="highlighted"><?php print render($page['highlighted']); ?></div><?php endif; ?>
  		
  		<?php if (!isset($node)):?>
