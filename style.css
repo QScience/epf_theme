@@ -535,8 +535,10 @@ float:left;
 	height:auto;
 }
 .VoteHead .PostHeadTitle{
-	padding-left:70px;
-	display: block;
+/*	padding-left:70px;
+	display: block;*/
+	display: table-cell;
+	padding-left:10px;
 }
 .node-article .PostHeadTitle, .node-blog .PostHeadTitle,.node-editorial .PostHeadTitle{
 	padding-left:0px;
